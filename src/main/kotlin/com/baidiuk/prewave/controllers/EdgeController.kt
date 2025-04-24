@@ -1,18 +1,15 @@
 package com.baidiuk.prewave.controllers
 
-import com.baidiuk.prewave.repositories.EdgeRepository
-import com.baidiuk.prewave.TreeNode
-import com.baidiuk.prewave.services.TreeService
 import com.baidiuk.prewave.dto.TreeNode
+import com.baidiuk.prewave.repositories.EdgeRepository
+import com.baidiuk.prewave.services.TreeService
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+
+
+data class EdgeRequest(val fromId: Int, val toId: Int)
 
 @RestController
 @RequestMapping("/edges")
@@ -22,15 +19,13 @@ class EdgeController(
 ) {
 
     @PostMapping
-    fun createEdge(@RequestBody request: Pair<Int,Int>): ResponseEntity<Any> {
+    fun createEdge(@RequestBody request: EdgeRequest): ResponseEntity<Any> {
         return try {
-            val inserted = repo.createEdge(request.first, request.second)
-            if (inserted == 0) {
-                ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Edge from ${request.first} to ${request.second} already exists.")
-            } else {
-                ResponseEntity.status(HttpStatus.CREATED).build()
-            }
+            val inserted = repo.createEdge(request.fromId, request.toId)
+            ResponseEntity.status(HttpStatus.CREATED).build()
+        } catch (_: DuplicateKeyException) {
+            ResponseEntity.status(HttpStatus.CONFLICT)
+                .body("Edge from ${request.fromId} to ${request.toId} already exists.")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error creating edge: ${e.message}")
@@ -39,11 +34,11 @@ class EdgeController(
 
     //todo test edge case where removing edge can lead to creation of new independence tree.
     @DeleteMapping
-    fun deleteEdge(@RequestBody request: Pair<Int,Int>): ResponseEntity<Any> {
-        val deleted = repo.deleteEdge(request.first, request.second)
+    fun deleteEdge(@RequestBody request: EdgeRequest): ResponseEntity<Any> {
+        val deleted = repo.deleteEdge(request.fromId, request.toId)
         return if (deleted == 0) {
             ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Edge from ${request.first} to ${request.second} not found.")
+                .body("Edge from ${request.fromId} to ${request.toId} not found.")
         } else {
             ResponseEntity.noContent().build()
         }

@@ -1,10 +1,14 @@
-package com.baidiuk.prewave
+package com.baidiuk.prewave.repositories
 
-import com.baidiuk.prewave.Tables.EDGE
-import com.baidiuk.prewave.repositories.EdgeRepository
+import com.baidiuk.prewave.Tables
 import org.jooq.DSLContext
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -21,12 +25,7 @@ class EdgeRepositoryTest {
 
     @BeforeAll
     fun cleanBeforeStart() {
-        dsl.deleteFrom(EDGE).execute()
-    }
-
-    @AfterAll
-    fun cleanAfterAll() {
-        dsl.deleteFrom(EDGE).execute()
+        dsl.deleteFrom(Tables.EDGE).execute()
     }
 
     @Test
@@ -60,7 +59,7 @@ class EdgeRepositoryTest {
 
         repo.createEdge(99, 100)
         val all = repo.fetchTreeFrom(1)
-        println(all)
+//        println(all)
         assertEquals(3, all.size)
     }
 }
