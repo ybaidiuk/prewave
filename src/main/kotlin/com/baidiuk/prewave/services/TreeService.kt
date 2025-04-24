@@ -1,9 +1,9 @@
-package com.baidiuk.prewave
+package com.baidiuk.prewave.services
 
+import com.baidiuk.prewave.dto.TreeNode
+import com.baidiuk.prewave.repositories.EdgeRepository
 import org.springframework.stereotype.Service
 
-
-data class TreeNode(val id: Int, val children: List<TreeNode> = emptyList())
 @Service
 class TreeService(private val repo: EdgeRepository) {
 

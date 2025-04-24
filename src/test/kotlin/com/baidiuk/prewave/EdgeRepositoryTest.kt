@@ -1,6 +1,7 @@
 package com.baidiuk.prewave
 
 import com.baidiuk.prewave.Tables.EDGE
+import com.baidiuk.prewave.repositories.EdgeRepository
 import org.jooq.DSLContext
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
