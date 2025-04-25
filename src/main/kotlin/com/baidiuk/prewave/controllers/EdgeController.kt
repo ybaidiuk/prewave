@@ -1,5 +1,6 @@
 package com.baidiuk.prewave.controllers
 
+import com.baidiuk.prewave.dto.EdgeRequest
 import com.baidiuk.prewave.dto.TreeNode
 import com.baidiuk.prewave.repositories.EdgeRepository
 import com.baidiuk.prewave.services.TreeService
