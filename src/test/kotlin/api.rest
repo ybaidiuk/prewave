@@ -1,0 +1,25 @@
+### create edge
+POST http://localhost:8080/edges
+Content-Type: application/json
+
+{
+  "fromId": 9999,
+  "toId": 10000
+}
+
+
+### delete edge
+DELETE http://localhost:8080/edges
+Content-Type: application/json
+
+{
+  "fromId": 1,
+  "toId": 2
+}
+
+###
+
+### get tree
+GET http://localhost:8080/edges/1
+
+###

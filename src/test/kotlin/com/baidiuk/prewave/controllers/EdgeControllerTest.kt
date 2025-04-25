@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.server.LocalServerPort
-import org.springframework.http.*
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -53,11 +55,12 @@ class EdgeControllerTest {
     @Order(3)
     fun getTree_returnsTreeNode() {
         // already have edge 1→2
-        rest.postForEntity(url("/edges"), EdgeRequest(2,3), String::class.java)
+        rest.postForEntity(url("/edges"), EdgeRequest(2, 3), String::class.java)
         val response = rest.getForEntity(url("/edges/1"), TreeNode::class.java)
         assertEquals(HttpStatus.OK, response.statusCode)
         assertEquals(1, response.body?.id)
         assertEquals(1, response.body?.children?.size)
+        assertEquals(1, response.body?.children?.getOrNull(0)?.children?.size)
     }
 
     @Test
@@ -71,22 +74,17 @@ class EdgeControllerTest {
         )
         assertEquals(HttpStatus.NO_CONTENT, response.statusCode)
     }
-//
-//    @Test
-//    @Order(5)
-//    fun deleteEdge_notFound() {
-//        val response = rest.exchange(
-//            url("/edges"),
-//            HttpMethod.DELETE,
-//            bodyEntity("""[99,100]"""),
-//            String::class.java
-//        )
-//        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
-//    }
-//
-//    private fun bodyEntity(json: String): HttpEntity<String> {
-//        val headers = HttpHeaders()
-//        headers.contentType = MediaType.APPLICATION_JSON
-//        return HttpEntity(json, headers)
-//    }
+
+    @Test
+    @Order(5)
+    fun deleteEdge_notFound() {
+        val response = rest.exchange(
+            url("/edges"),
+            HttpMethod.DELETE,
+            HttpEntity(EdgeRequest(99, 100)),
+            String::class.java
+        )
+        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+    }
+
 }
