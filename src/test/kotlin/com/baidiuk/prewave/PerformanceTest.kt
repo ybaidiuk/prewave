@@ -1,7 +1,7 @@
 package com.baidiuk.prewave
 
 import com.baidiuk.prewave.Tables.EDGE
-import com.baidiuk.prewave.controllers.EdgeRequest
+import com.baidiuk.prewave.dto.EdgeRequest
 import com.baidiuk.prewave.dto.TreeNode
 import com.baidiuk.prewave.repositories.EdgeRepository
 import org.jooq.DSLContext

@@ -1,6 +1,7 @@
 package com.baidiuk.prewave.controllers
 
 import com.baidiuk.prewave.Tables.EDGE
+import com.baidiuk.prewave.dto.EdgeRequest
 import com.baidiuk.prewave.dto.TreeNode
 import org.jooq.DSLContext
 import org.junit.jupiter.api.*

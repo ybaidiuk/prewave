@@ -9,9 +9,7 @@ class TreeService(private val repo: EdgeRepository) {
 
     fun buildTree(rootId: Int): TreeNode {
         val flatList = repo.fetchTreeFrom(rootId)
-
         val childrenMap = flatList.groupBy({ it.first }, { it.second })
-
         fun buildNode(id: Int): TreeNode {
             val children = childrenMap[id]?.map { buildNode(it) } ?: emptyList()
             return TreeNode(id, children)

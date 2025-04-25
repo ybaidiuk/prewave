@@ -13,7 +13,8 @@ create table edge (
 );
 CREATE INDEX idx_edge_to_id ON edge(to_id);
 `
-4. start application PrewaveApplication
-5. play around with api.rest file (like postman inside IDE)
-6. I did implemented 2 performance tests for 2k objects, for repo and controller separately. Please check it out.  
+4. execute maven to generate objects. `mvn clean generate-sources`
+5. start application PrewaveApplication
+6. play around with api.rest file (like postman inside IDE)
+7. I did implement 2 performance tests for 2k objects, for repo and controller separately. Please check it out.  
 

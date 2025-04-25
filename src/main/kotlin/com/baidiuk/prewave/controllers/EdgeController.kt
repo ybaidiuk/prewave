@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
-data class EdgeRequest(val fromId: Int, val toId: Int)
 
 @RestController
 @RequestMapping("/edges")
@@ -21,7 +20,8 @@ class EdgeController(
     @PostMapping
     fun createEdge(@RequestBody request: EdgeRequest): ResponseEntity<Any> {
         return try {
-            val inserted = repo.createEdge(request.fromId, request.toId)
+//            val inserted =
+            repo.createEdge(request.fromId, request.toId)
             ResponseEntity.status(HttpStatus.CREATED).build()
         } catch (_: DuplicateKeyException) {
             ResponseEntity.status(HttpStatus.CONFLICT)
