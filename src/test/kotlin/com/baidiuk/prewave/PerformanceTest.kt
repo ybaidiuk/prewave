@@ -39,7 +39,7 @@ class PerformanceTest {
     }
 
     @Test
-    fun `repository perf test for 2k edges`() {
+    fun repoCreate2kEdges() {
 
         val total = 2000
         var inserted = 0
@@ -65,7 +65,7 @@ class PerformanceTest {
     }
 
     @Test
-    fun `http controller perf test for 2k edges`() {
+    fun controllerGet2kEdges() {
         val total = 2000
 
         val time = measureTimeMillis {
